@@ -10,7 +10,7 @@ app.use(express.json());
 
 app.use((err, req, res, next) => {
     res.json({
-        success:"failure",
+        success: "failure",
         message: err.message
     })
 });
@@ -19,9 +19,9 @@ app.use("/api", urlRoutes);
 
 
 
-app.listen(3000, (err) => {
+app.listen(process.env.server_port, (err) => {
     if (err) {
         console.log(err);
     }
-    console.log('SERVER IS RUNNING ON PORT 3000');
+    console.log(`SERVER IS RUNNING ON PORT ${process.env.server_port}`);
 })
