@@ -1192,3 +1192,73 @@ a {
         grid-template-columns: 1fr;
     }
 }
+
+/* Custom Delete Confirmation Modal */
+.delete-modal-content {
+    max-width: 450px !important;
+    text-align: center;
+}
+
+.delete-warning-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.delete-warning-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+.delete-warning-icon i {
+    width: 32px;
+    height: 32px;
+    color: var(--error);
+}
+
+.delete-confirm-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.delete-confirm-text code {
+    color: var(--secondary);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.delete-confirm-subtext {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-danger-action {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger-action:hover {
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+}
+
+.btn-danger-action:active {
+    transform: translateY(0);
+}

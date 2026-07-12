@@ -21,10 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Modals
     const statsModal = document.getElementById('stats-modal');
     const editModal = document.getElementById('edit-modal');
+    const deleteModal = document.getElementById('delete-modal');
+    
     const closeStatsBtn = document.getElementById('close-stats-btn');
     const statsCloseBtnFooter = document.getElementById('stats-close-btn-footer');
     const closeEditBtn = document.getElementById('close-edit-btn');
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
+    
+    const closeDeleteBtn = document.getElementById('close-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const deleteShortCodeDisplay = document.getElementById('delete-short-code-display');
     
     // Edit Form Elements
     const editForm = document.getElementById('edit-form');
@@ -46,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // State
     let links = JSON.parse(localStorage.getItem('linkspire_links') || '[]');
     let currentEditCode = null;
+    let currentDeleteCode = null;
 
     // API Base URL for production deployment (empty in dev to use Vite proxy)
     const API_BASE = import.meta.env.VITE_API_URL || '';
@@ -253,11 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Delete Event
         const deleteBtns = document.querySelectorAll('.btn-delete-action');
         deleteBtns.forEach(btn => {
-            btn.addEventListener('click', async (e) => {
+            btn.addEventListener('click', (e) => {
                 const code = e.currentTarget.closest('.link-card').dataset.code;
-                if (confirm(`Are you sure you want to permanently delete the shortcode ${code}?`)) {
-                    await deleteLink(code);
-                }
+                openDeleteConfirmModal(code);
             });
         });
     }
@@ -442,6 +448,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
 
+    function openDeleteConfirmModal(code) {
+        currentDeleteCode = code;
+        deleteShortCodeDisplay.textContent = code;
+        openModal(deleteModal);
+    }
+
     /* ==========================================================================
        Modal Animations
        ========================================================================== */
@@ -459,11 +471,24 @@ document.addEventListener('DOMContentLoaded', () => {
     statsCloseBtnFooter.addEventListener('click', () => closeModal(statsModal));
     closeEditBtn.addEventListener('click', () => closeModal(editModal));
     cancelEditBtn.addEventListener('click', () => closeModal(editModal));
+    
+    closeDeleteBtn.addEventListener('click', () => closeModal(deleteModal));
+    cancelDeleteBtn.addEventListener('click', () => closeModal(deleteModal));
+    
+    confirmDeleteBtn.addEventListener('click', async () => {
+        if (currentDeleteCode) {
+            const codeToDel = currentDeleteCode;
+            closeModal(deleteModal);
+            await deleteLink(codeToDel);
+            currentDeleteCode = null;
+        }
+    });
 
     // Close on overlay background click
     window.addEventListener('click', (e) => {
         if (e.target === statsModal) closeModal(statsModal);
         if (e.target === editModal) closeModal(editModal);
+        if (e.target === deleteModal) closeModal(deleteModal);
     });
 
     /* ==========================================================================

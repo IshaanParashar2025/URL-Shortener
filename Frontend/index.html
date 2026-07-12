@@ -228,6 +228,36 @@
         </div>
     </div>
 
+    <!-- Modal: Confirm Delete -->
+    <div id="delete-modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
+        <div class="glass-card modal-content delete-modal-content">
+            <div class="modal-header">
+                <h3>Delete Short Link</h3>
+                <button class="modal-close-btn" id="close-delete-btn" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="delete-warning-container">
+                    <div class="delete-warning-icon">
+                        <i data-lucide="alert-triangle"></i>
+                    </div>
+                </div>
+                <p class="delete-confirm-text">Are you sure you want to permanently delete the short link <code id="delete-short-code-display">abc1234</code>?</p>
+                <p class="delete-confirm-subtext">This action cannot be undone. This link will stop redirecting immediately.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
+                <button type="button" class="btn btn-danger-action" id="confirm-delete-btn">
+                    <span>Delete Vault Link</span>
+                    <i data-lucide="trash-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification Container -->
     <div id="toast-container" class="toast-container"></div>
 
