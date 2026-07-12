@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkSpire - Premium URL Shortener & Analytics</title>
+    <meta name="description" content="Optimize, personalize, and track your links in real-time with LinkSpire. A premium URL shortening service for modern creators and enterprises.">
+    <!-- Google Fonts: Outfit for titles, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <!-- Dynamic Redirect Loader Overlay -->
+    <div id="redirect-overlay" class="redirect-overlay hidden">
+        <div class="redirect-card">
+            <div class="loader-ripple">
+                <div></div>
+                <div></div>
+            </div>
+            <h2 class="redirect-title">LinkSpire</h2>
+            <p class="redirect-status">Resolving your destination...</p>
+            <div class="redirect-progress-bar">
+                <div class="redirect-progress-fill"></div>
+            </div>
+            <p class="redirect-subtext">Securing connection to the target URL</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-root">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <a href="/" class="app-logo" id="logo-link">
+                    <i data-lucide="link-2" class="logo-icon"></i>
+                    <span class="logo-text">LinkSpire</span>
+                </a>
+                <div class="header-badge">
+                    <span class="status-dot green"></span>
+                    <span class="status-text">API Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Hero Banner -->
+            <section class="hero-section">
+                <div class="hero-glow hero-glow-1"></div>
+                <div class="hero-glow hero-glow-2"></div>
+                
+                <h1 class="hero-title">Shorten Links. <br><span class="gradient-text">Expand Reach.</span></h1>
+                <p class="hero-subtitle">Optimize, edit, and track your URLs dynamically with our high-performance link management console.</p>
+            </section>
+
+            <!-- Shortener Form -->
+            <section class="shortener-section">
+                <div class="glass-card shorten-card">
+                    <form id="shorten-form" class="shorten-form" novalidate>
+                        <div class="input-wrapper">
+                            <i data-lucide="link" class="input-icon"></i>
+                            <input 
+                                type="url" 
+                                id="long-url-input" 
+                                placeholder="Paste your long URL here (e.g., https://example.com/very-long-path)"
+                                required
+                                autocomplete="off"
+                            >
+                            <button type="button" id="clear-btn" class="clear-btn hidden" aria-label="Clear input">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <button type="submit" id="shorten-submit-btn" class="btn btn-primary btn-glow">
+                            <span>Shorten Link</span>
+                            <i data-lucide="arrow-right"></i>
+                            <div class="spinner hidden" id="shorten-spinner"></div>
+                        </button>
+                    </form>
+                    <div id="url-error" class="validation-error hidden">
+                        <i data-lucide="alert-circle"></i>
+                        <span id="error-message">Please enter a valid URL</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Links Dashboard -->
+            <section class="dashboard-section">
+                <div class="dashboard-header">
+                    <div class="dashboard-titles">
+                        <h2 class="section-title">My Link Vault</h2>
+                        <p class="section-subtitle">Manage shortened links and monitor performance details.</p>
+                    </div>
+                    <div class="search-wrapper">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search saved links...">
+                    </div>
+                </div>
+
+                <!-- Links Grid/List Container -->
+                <div id="links-container" class="links-container">
+                    <!-- Dynamic cards injected here or Fallback Empty State -->
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon-wrapper">
+                            <i data-lucide="link-2" class="empty-icon"></i>
+                        </div>
+                        <h3>No Links in your Vault</h3>
+                        <p>Generate your first shortened link using the form above to start tracking clicks.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p>&copy; 2026 LinkSpire. Crafted with modern web standard technologies.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal: View Stats -->
+    <div id="stats-modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
+        <div class="glass-card modal-content stats-modal-content">
+            <div class="modal-header">
+                <h3>Link Performance</h3>
+                <button class="modal-close-btn" id="close-stats-btn" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Visual Click Gauge -->
+                <div class="stats-gauge-container">
+                    <div class="stats-counter-ring">
+                        <div class="ring-fill"></div>
+                        <div class="ring-content">
+                            <span id="modal-clicks-count" class="gauge-number">0</span>
+                            <span class="gauge-label">Clicks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Link details grid -->
+                <div class="stats-details-grid">
+                    <div class="detail-item full-width">
+                        <span class="detail-label">Original Destination</span>
+                        <a id="modal-original-url" href="#" target="_blank" rel="noopener noreferrer" class="detail-value link-highlight">
+                            <span>https://example.com/some/extremely/long/path</span>
+                            <i data-lucide="external-link" class="inline-icon"></i>
+                        </a>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Short Code</span>
+                        <div class="detail-value flex-value">
+                            <code id="modal-short-code">abc1234</code>
+                            <button id="modal-copy-code-btn" class="icon-btn-small" title="Copy Short Link">
+                                <i data-lucide="copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value"><span class="badge badge-success">Active</span></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Created At</span>
+                        <span id="modal-created-at" class="detail-value">July 12, 2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Last Modified</span>
+                        <span id="modal-updated-at" class="detail-value">July 12, 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="stats-close-btn-footer">Close Details</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Edit Destination URL -->
+    <div id="edit-modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
+        <div class="glass-card modal-content edit-modal-content">
+            <div class="modal-header">
+                <h3>Edit Destination URL</h3>
+                <button class="modal-close-btn" id="close-edit-btn" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <form id="edit-form" novalidate>
+                <div class="modal-body">
+                    <p class="edit-modal-intro">Modify the target destination for short link: <code id="edit-short-code-display">abc1234</code></p>
+                    
+                    <div class="form-group">
+                        <label for="edit-url-input" class="form-label">New Destination URL</label>
+                        <div class="input-wrapper">
+                            <i data-lucide="link" class="input-icon"></i>
+                            <input 
+                                type="url" 
+                                id="edit-url-input" 
+                                placeholder="https://example.com/new-destination" 
+                                required
+                            >
+                        </div>
+                        <div id="edit-url-error" class="validation-error hidden">
+                            <i data-lucide="alert-circle"></i>
+                            <span id="edit-error-message">Please enter a valid URL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-edit-btn">
+                        <span>Save Changes</span>
+                        <i data-lucide="save"></i>
+                        <div class="spinner hidden" id="edit-spinner"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Application Script -->
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
