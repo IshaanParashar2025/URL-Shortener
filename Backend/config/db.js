@@ -5,7 +5,11 @@ const db = mysql2.createPool(
         host:"localhost",
         user:"root",
         password:"$trongPassword123",
-        database:"url_db"
+        database:"url_db",
+        ssl: {
+            rejectUnauthorized: false
+        }
+
     }
 )
 
