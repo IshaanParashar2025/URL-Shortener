@@ -7,7 +7,7 @@ exports.shortenURL = async (new_url, old_url) => {
 }
 
 exports.returnURL = async (short_url) => {
-    const sql = "SELECT url_id, shortened_url, original_url, created_at, updated_at FROM URLs WHERE shortened_url = ?";
+    const sql = "SELECT url_id, shortened_url, original_url, created_at, updated_at, times_accessed FROM URLs WHERE shortened_url = ?";
     const [result] = await db.query(sql, [short_url]);
     return result;
 }

@@ -1,7 +1,6 @@
 const mysql2 = require("mysql2/promise")
 
-const db = mysql2.createPool(
-    {
+const db = mysql2.createPool({       
         host: process.env.mysql_host,
         user: process.env.mysql_user,
         password: process.env.mysql_password,
@@ -11,6 +10,7 @@ const db = mysql2.createPool(
             rejectUnauthorized: false
         }
     }
-)
+);
+
 
 module.exports = db;
