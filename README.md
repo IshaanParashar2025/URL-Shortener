@@ -108,33 +108,6 @@ CREATE TABLE IF NOT EXISTS URLs (
 
 ---
 
-## Testing Architecture (Jest & Supertest)
-
-The backend features an isolated testing strategy. By leveraging Jest mock functions, the test suite verifies controller behavior, payload validation, and HTTP status codes without establishing network connection handshakes with a physical database.
-
-### Example Integration Test:
-```javascript
-const request = require("supertest");
-const app = require("../app");
-const urlModel = require("../model/urlModel");
-
-jest.mock("../model/urlModel"); // Mock database operations
-
-describe("POST /api/shorten", () => {
-    test("should return 400 Bad Request if URL format is invalid", async () => {
-        const response = await request(app)
-            .post("/api/shorten")
-            .send({ url: "not-a-valid-url" });
-
-        expect(response.status).toBe(400);
-        expect(response.body.success).toBe(false);
-        expect(urlModel.shortenURL).not.toHaveBeenCalled(); // DB is untouched
-    });
-});
-```
-
----
-
 ## Local Installation & Setup
 
 1. Navigate to the `Backend/` directory.
@@ -144,11 +117,11 @@ describe("POST /api/shorten", () => {
    ```
 3. Setup environmental variables in a local `.env` file:
    ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=yourpassword
-   DB_NAME=url_db
-   DB_PORT=3306
+   mysql_host=localhost
+   mysql_user=root
+   mysql_password=yourpassword
+   mysql_database=url_db
+   mysql_port=3306
    ```
 4. Start the API server:
    ```bash
