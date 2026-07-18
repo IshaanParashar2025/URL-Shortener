@@ -142,8 +142,19 @@ document.addEventListener('DOMContentLoaded', () => {
             
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'glass-card link-card';
+                
+                // Deterministic sticky note color and rotation based on shortCode char codes
+                const stickyColors = ['card-yellow', 'card-blue', 'card-pink', 'card-green'];
+                let charSum = 0;
+                for (let i = 0; i < item.shortCode.length; i++) {
+                    charSum += item.shortCode.charCodeAt(i);
+                }
+                const colorClass = stickyColors[charSum % stickyColors.length];
+                const rotationDegrees = ((charSum % 7) - 3) * 0.5; // -1.5deg to 1.5deg
+                
+                card.className = `glass-card link-card ${colorClass}`;
                 card.dataset.code = item.shortCode;
+                card.style.transform = `rotate(${rotationDegrees}deg)`;
                 
                 const shortUrl = `${window.location.origin}/r/${item.shortCode}`;
                 const displayDate = formatDate(item.created_at);

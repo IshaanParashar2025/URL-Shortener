@@ -21,9 +21,11 @@ app.use("/api", urlRoutes);
 
 
 
-app.listen(PORT, (err) => {
+const server = app.listen(PORT, (err) => {
     if (err) {
         console.log(err);
     }
     console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
-})
+});
+
+module.exports = app;
