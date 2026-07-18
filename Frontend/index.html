@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinkSpire - Premium URL Shortener & Analytics</title>
     <meta name="description" content="Optimize, personalize, and track your links in real-time with LinkSpire. A premium URL shortening service for modern creators and enterprises.">
-    <!-- Google Fonts: Outfit for titles, Inter for body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="/style.css">
@@ -37,7 +36,7 @@
         <header class="app-header">
             <div class="header-content">
                 <a href="/" class="app-logo" id="logo-link">
-                    <i data-lucide="link-2" class="logo-icon"></i>
+                    <i data-lucide="notebook" class="logo-icon"></i>
                     <span class="logo-text">LinkSpire</span>
                 </a>
                 <div class="header-badge">
@@ -60,7 +59,10 @@
 
             <!-- Shortener Form -->
             <section class="shortener-section">
-                <div class="glass-card shorten-card">
+                <div class="glass-card shorten-card notebook-sheet">
+                    <div class="binder-spiral">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
                     <form id="shorten-form" class="shorten-form" novalidate>
                         <div class="input-wrapper">
                             <i data-lucide="link" class="input-icon"></i>
@@ -89,7 +91,10 @@
             </section>
 
             <!-- My Links Dashboard -->
-            <section class="dashboard-section">
+            <section class="dashboard-section notebook-sheet">
+                <div class="binder-spiral">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
                 <div class="dashboard-header">
                     <div class="dashboard-titles">
                         <h2 class="section-title">My Link Vault</h2>
@@ -106,7 +111,7 @@
                     <!-- Dynamic cards injected here or Fallback Empty State -->
                     <div class="empty-state" id="empty-state">
                         <div class="empty-icon-wrapper">
-                            <i data-lucide="link-2" class="empty-icon"></i>
+                            <i data-lucide="pen-line" class="empty-icon"></i>
                         </div>
                         <h3>No Links in your Vault</h3>
                         <p>Generate your first shortened link using the form above to start tracking clicks.</p>
